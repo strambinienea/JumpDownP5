@@ -1,5 +1,5 @@
 class Player {
-    constructor(x, y) {
+    constructor(x, y, animation) {
         this.pos = createVector(x, y);
         this.vx = 5;
         this.vy = 10;
@@ -8,14 +8,21 @@ class Player {
         this.gravity = createVector(0, this.vgravity);
         this.sliding = false;
         this.direction = -1;
+
+        this.animation = animation;
+        this.frameIndex = 0;
+        this.animationSpeed = 0.4;
     }
 
     show() {
-        fill(128);
-        ellipse(this.pos.x, this.pos.y, d);
+        // the sprite is stretched to make him fit in a "d" side square, edit it when "d" is changed in the real "w" and "h"
+        imageMode(CENTER);
+        image(animation[floor(this.frameIndex) % this.animation.length], this.pos.x, this.pos.y, d, d);
     }
 
     update() {
+        this.frameIndex += this.animationSpeed;
+
         if (this.pos.y > height - d / 2) {
             this.pos.y = height - d / 2;
             // this.force.y = 0;
